@@ -1,0 +1,199 @@
+CREATE DATABASE LIBRARY;
+USE LIBRARY;
+
+-- Create branch table --
+
+CREATE TABLE BRANCH(
+Branch_no INT  PRIMARY KEY,
+Manager_Id INT,
+Branch_address VARCHAR(100),
+Contact_no BIGINT);
+
+-- INSERT ROWS INTO BRANCH TABLE --
+
+INSERT INTO BRANCH VALUES
+(1,211,'12_St_Gandhi_nagar',555666),
+(2,212,'14_St_Gandhi_nagar',512345),
+(3,213,'15_St_NEHRU_nagar',55789),
+(4,214,'16_St_nehru_nagar',557789),
+(5,215,'17_St_Subash_nagar',5558970),
+(6,216,'18_St_Bose_nagar',55000000),
+(7,217,'19_St_Tilak_nagar',555555),
+(8,218,'2_St_lal_nagar',5556789),
+(9,219,'3_St_Jhansi_nagar',5000055),
+(10,220,'4_St_Bose_nagar',55232325);
+
+SELECT * FROM BRANCH;
+
+-- create employee table --
+
+CREATE TABLE Employee(
+Emp_Id INT PRIMARY KEY,
+Emp_name VARCHAR(30),
+Position VARCHAR(30),
+Salary DECIMAL(10,2),
+Branch_no INT,FOREIGN KEY (Branch_no) references Branch(Branch_no) 
+);
+
+INSERT INTO EMPLOYEE VALUES
+(101,'JOHN','LIBRARY_ASSISTANT',40000,1),
+(102,'JAMES','LIBRARY_TECHNICIAN',27000,2),
+(103,'GEORGE','ACCOUNTANT',35000,3),
+(104,'RON','SUPPLY_MANAGER',57000,5),
+(105,'SAM','LIBRARY_SECRETARY',58000,5),
+(106,'NOEL','LIBRARIAN',34000,7),
+(107,'LEO','ARCHIVIST',43000,6),
+(108,'JOSEPH','LIBRARIAN',35000,8),
+(109,'FANNY','HR',52000,3),
+(110,'HARRY','DATA_ANALYST',68000,8);
+
+
+SELECT * FROM EMPLOYEE;
+
+
+-- Create custome table --
+CREATE TABLE Customer(
+Customer_Id INT PRIMARY KEY,
+Customer_name VARCHAR(30),
+Customer_address VARCHAR(100),
+Reg_date DATE);
+
+INSERT INTO CUSTOMER VALUES
+(132,'HARI','G_VILLA_6_ST_GUJARAT','2020-06-05'),
+(130,'GUNA','Y_VILLA_7_ST_LONDON','2020-04-05'),
+(131,'VIVAN','GRACE_VILLA_4_ST_NEWYORK','2024-04-05'),
+(133,'VISHNU','FAIRY_VILLA_6_ST_LONDON','2023-04-05'),
+(134,'GANGA','GANGA_VILLA_5_ST_GOA','2021-05-08'),
+(135,'SARIKA','SS_VILLA_6_ST_PUNE','2024-09-05'),
+(136,'THULSI','HOLY_VILLA_9_ST_DELHI','2023-06-05'),
+(137,'LILY','HH_VILLA_8_ST_GOA','2020-07-05'),
+(138,'INDU','UNNI_VILLA_2_ST_PUNE','2023-07-05'),
+(139,'HAKIM','KK_VILLA_8_ST_DELHI','2021-05-05');
+
+SELECT * FROM CUSTOMER;
+
+CREATE TABLE Books(
+ISBN  VARCHAR(30)  PRIMARY KEY,
+Book_title VARCHAR(30),
+Category VARCHAR(15),
+Rental_Price INT,
+Status ENUM('YES','NO'),
+Author VARCHAR(30),
+Publisher VARCHAR(30)
+);
+
+INSERT INTO BOOKS VALUES
+('88881','ADUJEEVITHAM','FICTION',60,'YES','BENYAMIN','PENGUIN'),
+('88882','WINGS OF FIRE','AUTOBIOGRAPHY',80,'NO','APJ ABDUL KALAM','OSWAL'),
+('88883','THE SECRET','SELF HELP',50,'YES','RHONDA BYRNE','OXFORD'),
+('88884','THE MAGIC','SELF HELP BOOK',70,'YES','RHONDA BYRNE','OXFORD'),
+('88885','NARNIA','FICTION',80,'YES','CCCC','OSWAL'),
+('88886','HARRY POTTER','FICTION',100,'NO','J K ROWLING','OXFORD'),
+('88887','MALGUDI DAYS','CHILDREN BOOK',60,'YES','R K NARAYAN','PENGUIN'),
+('88888','MY STORY','AUTOBIOGRAPHYY',90,'YES','KAMLA SURYA','OSWAL'),
+('88889','AN ERA OF DARKNESS','NON FICTION',40,'NO','SASI THAROOR','PENGUIN'),
+('88880','THE ALCHEMIST','FICTION',70,'YES','PAULO COHELO','OSWAL'),
+('88891','MIDNIGHTS CHILDREN','METAFICTION',80,'YES','SALMAN RUSHDIE','PENGUIN');
+
+SELECT * FROM BOOKS;
+
+
+
+-- create issue status table --
+
+CREATE TABLE  IssueStatus(
+Issue_Id INT PRIMARY KEY,
+Issued_cust INT, 
+Issued_book_name VARCHAR(30),
+Issue_date DATE,
+Isbn_book  VARCHAR(30),
+FOREIGN KEY( Issued_cust) REFERENCES CUSTOMER(Customer_Id),
+FOREIGN KEY (Isbn_book) REFERENCES BOOKS(ISBN)
+);
+
+INSERT INTO IssueStatus VALUES
+(1,130,'WINGS OF FIRE','2024-07-08','88882'),
+(2,132,'THE SECRET','2024-07-09','88883'),
+(3,135,'NARNIA','2024-07-07','88885'),
+(4,133,'WINGS OF FIRE','2024-06-08','88882'),
+(5,131,'HARRYPOTTER','2024-07-05','88886'),
+(6,134,'HARRYPOTTER','2024-04-08','88886'),
+(7,136,'WINGS OF FIRE','2024-06-08','88882'),
+(8,139,'AADUJEEVIHAM','2024-04-04','88881'),
+(9,137,'AADUJEEVITHAM','2024-05-05','88881'),
+(10,138,'THE SECRET','2024-01-02','88883');
+
+
+SELECT * FROM ISSUESTATUS;
+
+-- create table return status --
+
+CREATE TABLE ReturnStatus(
+Return_Id INT PRIMARY KEY,
+Return_cust VARCHAR(30),
+Return_book_name VARCHAR(30),
+Return_date DATE,
+Isbn_book2 varchar(30),
+FOREIGN KEY (Isbn_book2) references BOOKS(ISBN)
+ );
+ 
+ INSERT INTO ReturnStatus VALUES
+ (001,'KEN','AADUJEEVITHAM','2024-07-06','88881'),
+ (002,'RONE','WINGS OF FIRE','2024-07-07','88882'),
+ (003,'KENNY','AADUJEEVITHAM','2024-05-06','88881'),
+ (004,'IRIC','THE MAGIC','2024-01-06','88884'),
+ (005,'ANU','NARNIA','2024-08-06','88885'),
+ (006,'AMAL','HARRY POTTER','2024-09-06','88886'),
+ (007,'DON','HARRY POTTER','2024-04-06','88886'),
+ (008,'SAMU','NARNIA','2024-06-06','88885'),
+ (009,'UNNI','THE MAGIC','2024-08-06','88884'),
+ (010,'ANJU','THE SECRET','2024-02-06','88883');
+ 
+ SELECT * FROM RETURNSTATUS;
+ 
+ -- 1. Retrieve the book title, category, and rental price of all available books. --
+ SELECT BOOK_TITLE,CATEGORY,RENTAL_PRICE FROM BOOKS WHERE STATUS='YES';
+ 
+ -- 2.List the employee names and their respective salaries in descending order of salary. --
+ SELECT EMP_NAME, SALARY FROM EMPLOYEE ORDER BY SALARY DESC;
+ 
+ -- 3.Retrieve the book titles and the corresponding customers who have issued those books. --
+ SELECT BOOKS.BOOK_TITLE,CUSTOMER.CUSTOMER_NAME FROM BOOKS
+ JOIN ISSUESTATUS ON BOOKS.ISBN=ISSUESTATUS.ISBN_BOOK
+ JOIN CUSTOMER ON CUSTOMER.CUSTOMER_ID=ISSUESTATUS.ISSUED_CUST;
+ 
+ -- 4.  Display the total count of books in each category. --
+ SELECT CATEGORY,COUNT(*) AS NUMBER_OF_BOOKS FROM BOOKS GROUP BY CATEGORY;
+ 
+ /* 5. Retrieve the employee names and their positions for the employees whose salaries
+ are above Rs.50,000. */
+ SELECT EMP_NAME,POSITION,SALARY FROM EMPLOYEE WHERE SALARY>50000;
+ 
+ /* 6. List the customer names who registered before 2022-01-01 and have
+not issued any books yet */
+SELECT CUSTOMER_NAME FROM CUSTOMER WHERE REG_DATE<'2022-01-01'
+ AND CUSTOMER_ID NOT IN (SELECT ISSUED_CUST FROM ISSUESTATUS);
+
+-- 7. Display the branch numbers and the total count of employees in each branch. --
+SELECT BRANCH_NO,COUNT(*) AS TOTAL_EMPLOYEES FROM EMPLOYEE GROUP BY BRANCH_NO;
+
+--  8. Display the names of customers who have issued books in the month of June 2023 --
+SELECT DISTINCT CUSTOMER_NAME FROM CUSTOMER 
+WHERE CUSTOMER_ID IN(SELECT ISSUED_CUST FROM ISSUESTATUS
+WHERE MONTH(ISSUE_DATE) = 06 AND YEAR(ISSUE_DATE) = 2023);
+
+
+/* 9. Retrieve book_title from book table containing history. 10.Retrieve
+the branch numbers along with the count of employees for branches
+having more than 5 employees. */
+
+SELECT BOOK_TITLE FROM BOOKS WHERE CATEGORY LIKE '%HISTORY%';
+
+/* 10. Retrieve the branch numbers along with the count of employees
+for branches having more than 5 employees */
+SELECT BRANCH_NO,COUNT(EMP_ID) EMPLOYEE_COUNT  FROM EMPLOYEE GROUP BY BRANCH_NO 
+HAVING COUNT(EMP_ID)>5;
+
+
+
+
